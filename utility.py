@@ -35,5 +35,5 @@ class Command:
     
     @property
     def stdout(self):
-        output: str = self._result.stdout.decode('utf-8')
+        output: str = self._result.stdout
         return output
