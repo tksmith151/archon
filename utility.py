@@ -37,3 +37,8 @@ class Command:
     def stdout(self):
         output: str = self._result.stdout
         return output
+    
+    @property
+    def stderr(self):
+        output: str = self._result.stderr
+        return output
