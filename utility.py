@@ -33,6 +33,7 @@ class Command:
             return
         raise Exception("Cannot run a command twice")
     
+    @property
     def stdout(self):
         output: str = self._result.stdout.decode('utf-8')
         return output

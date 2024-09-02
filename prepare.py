@@ -6,7 +6,6 @@ def list_disks():
     lsblk.run()
     disks: List[str] = []
     output: List[str] = []
-    print(lsblk.stdout)
     for device in json.loads(lsblk.stdout).get("blockdevices"):
         device_type = device.get("type")
         if device_type == "disk":
