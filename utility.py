@@ -14,7 +14,7 @@ class Command:
         self._result = None
 
     def add(self, description: str):
-        self._description.append(f"# description")
+        self._description.append(f"# {description}")
 
     def set(self, string: str):
         if not self._string:
@@ -27,5 +27,11 @@ class Command:
         print(self._string)
 
     def run(self):
-        result = subprocess.run(shlex.shlex(self._string), capture_output=True, text=True)
-        return result
+        if not result:
+            result = subprocess.run(shlex.shlex(self._string), capture_output=True, text=True)
+            self._result = result
+        raise Exception("Cannot run a command twice")
+    
+    def stdout(self):
+        output: str = self._result.stdout.decode('utf-8')
+        return output
