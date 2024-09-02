@@ -28,7 +28,7 @@ class Command:
 
     def run(self):
         if not self._result:
-            result = subprocess.run(shlex.shlex(self._string), capture_output=True, text=True)
+            result = subprocess.run(shlex.split(self._string), capture_output=True, text=True)
             self._result = result
             return
         raise Exception("Cannot run a command twice")
