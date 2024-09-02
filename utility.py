@@ -30,6 +30,7 @@ class Command:
         if not self._result:
             result = subprocess.run(shlex.shlex(self._string), capture_output=True, text=True)
             self._result = result
+            return
         raise Exception("Cannot run a command twice")
     
     def stdout(self):
