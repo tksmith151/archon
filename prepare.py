@@ -37,16 +37,38 @@ def partition(disk_name: str):
     btrfs.set(f'sgdisk -n 2:0:0 -c 2:"Linux LVM" -t 2:8300 {disk_name}')
     btrfs.confirm()
 
+def list_partitions(disk_name):
+    disk_name
+    lsblk = Command()
+    lsblk.set(f"lsblk --json {disk_name}")
+    lsblk.run()
+    efi_partition = None
+    btrfs_partition = None
+    drive = json.loads(lsblk.stdout).get("blockdevices")[0]
+    partitions = drive["children"]
+    if len(partitions) != 2:
+        raise Exception("Incorrect number of partitions")
+    for partition in drive["children"]:
+        partition_type = partition["type"]
+        if partition_type != "part":
+            continue
+        partition_name = partition["name"]
+        if partition["size"] == "2G":
+            efi_partition = f"/dev/{partition_name}"
+        else:
+            btrfs_partition = f"/dev/{partition_name}"
+    return efi_partition, btrfs_partition
 
 def format(disk_name: str):
+    efi_partition, btrfs_partition = list_partitions(disk_name)
     efi = Command()
     efi.add("Format the efi partition")
-    efi.set(f"mkfs.fat -F 32 {disk_name}p1")
+    efi.set(f"mkfs.fat -F 32 {efi_partition}")
     efi.confirm()
 
     btrfs = Command()
     btrfs.add("Format the btrfs partition")
-    btrfs.set(f"mkfs.btrfs {disk_name}p2")
+    btrfs.set(f"mkfs.btrfs {btrfs_partition}")
     btrfs.confirm()
 
 def main():
