@@ -29,13 +29,13 @@ def partition(disk_name: str):
     efi.add("Create efi partition")
     efi.add("Creates a 2GiB Partition at the first avaialable location")
     efi.set(f'sgdisk -n 1:0:+2GiB -c 1:"EFI System Partition" -t 1:ef00 {disk_name}')
-    gpt.confirm()
+    efi.confirm()
 
     btrfs = Command()
     btrfs.add("Create btrfs partition")
     btrfs.add("Creates a btrfs partition with the rest of the disk")
     btrfs.set(f'sgdisk -n 2:0:0 -c 2:"Linux LVM" -t 2:8300 {disk_name}')
-    gpt.confirm()
+    btrfs.confirm()
 
 
 def format(disk_name: str):
