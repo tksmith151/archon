@@ -77,6 +77,7 @@ def subvolume(btrfs_partition: str):
     root = Command()
     root.add("Add root btrfs subvolume")
     root.set("btrfs subvolume create /mnt/@")
+    root.confirm()
 
     umount = Command()
     umount.set(f"umount /mnt")
