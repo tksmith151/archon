@@ -15,18 +15,25 @@ def list_disks():
             output.append(f"/dev/{device_name}")
     if not disks:
         raise Exception("No disks found")
-    display_lines(disks)
+    # display_lines(disks)
     return output
 
 def partition(disk_name: str):
+    gpt = Command()
+    gpt.add("Clear all partitions from disk")
+    gpt.add("Only do this if you are installing for the first time")
+    gpt.set(f"sgdisk -og {disk_name}")
+
     efi = Command()
     efi.add("Create efi partition")
-    efi.set(f"parted -s {disk_name} mklabel gpt mkpart primary ext4 0% 2GiB set 1 boot on")
+    efi.add("Creates a 2GiB Partition at the first avaialable location")
+    efi.set(f'sgdisk -n 1:0:+2GiB -c 1:"EFI System Partition" -t 1:ef00 {disk_name}')
     efi.show_summary()
 
     btrfs = Command()
     btrfs.add("Create btrfs partition")
-    btrfs.set(f"parted -s {disk_name} mklabel msdos mkpart primary ext4 0% 2GiB set 1 boot on")
+    btrfs.add("Creates a btrfs partition with the rest of the disk")
+    btrfs.set(f'sgdisk -n 2:0:0 -c 2:"Linux LVM" -t 2:8300 {disk_name}')
     btrfs.show_summary()
 
 
