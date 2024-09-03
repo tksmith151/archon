@@ -34,7 +34,7 @@ def partition(disk_name: str):
     btrfs = Command()
     btrfs.add("Create btrfs partition")
     btrfs.add("Creates a btrfs partition with the rest of the disk")
-    btrfs.set(f'sgdisk -n 2:0:0 -c 2:"Linux LVM" -t 2:8300 {disk_name}')
+    btrfs.set(f'sgdisk -n 2:0:0 -c 2:"BTRFS Partition" -t 2:8300 {disk_name}')
     btrfs.confirm()
 
 def list_partitions(disk_name):
