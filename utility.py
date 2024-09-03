@@ -33,7 +33,11 @@ class Command:
         confirmed = input("Perform above command (y/N):")
         if confirmed == "y":
             self.run()
+            print(self.stderr)
+            print(self.stdout)
+            print()
             return confirmed
+        print()
         return confirmed
 
 

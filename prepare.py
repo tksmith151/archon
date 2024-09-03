@@ -15,7 +15,6 @@ def list_disks():
             output.append(f"/dev/{device_name}")
     if not disks:
         raise Exception("No disks found")
-    # display_lines(disks)
     return output
 
 def partition(disk_name: str):
@@ -59,8 +58,7 @@ def list_partitions(disk_name):
             btrfs_partition = f"/dev/{partition_name}"
     return efi_partition, btrfs_partition
 
-def format(disk_name: str):
-    efi_partition, btrfs_partition = list_partitions(disk_name)
+def format(efi_partition, btrfs_partition):
     efi = Command()
     efi.add("Format the efi partition")
     efi.set(f"mkfs.fat -F 32 {efi_partition}")
@@ -69,7 +67,20 @@ def format(disk_name: str):
     btrfs = Command()
     btrfs.add("Format the btrfs partition")
     btrfs.set(f"mkfs.btrfs {btrfs_partition}")
-    btrfs.confirm()
+    btrfs.confirm() 
+
+def subvolume(btrfs_partition: str):
+    mount = Command()
+    mount.set(f"mount {btrfs_partition} /mnt")
+    mount.run()
+
+    root = Command()
+    root.add("Add root btrfs subvolume")
+    root.set("btrfs subvolume create /mnt/@")
+
+    umount = Command()
+    umount.set(f"umount /mnt")
+    umount.run()
 
 def main():
     disks = list_disks()
@@ -77,7 +88,9 @@ def main():
         raise Exception("Too many disks")
     disk = disks[0]
     partition(disk)
-    format(disk)
+    efi_partition, btrfs_partition = list_partitions(disk)
+    format(efi_partition, btrfs_partition)
+    subvolume(btrfs_partition)
 
 if __name__ == "__main__":
     main()
