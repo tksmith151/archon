@@ -25,6 +25,18 @@ class Command:
     def show_summary(self):
         display_lines(self._description)
         print(self._string)
+        print()
+
+    def confirm(self):
+        confirmed = False
+        self.show_summary()
+        confirmed = input("Perform above command (y/N):")
+        if confirmed == "y":
+            self.run()
+            return confirmed
+        return confirmed
+
+
 
     def run(self):
         if not self._result:
