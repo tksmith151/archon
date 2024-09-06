@@ -1,6 +1,7 @@
 import json
 import shlex
 import subprocess
+import sys
 from typing import List
 
 def display_lines(lines: List[str]):
@@ -36,9 +37,12 @@ class Command:
 
 
 
-    def run(self):
+    def run(self, show_progress=False):
         if not self._result:
-            result = subprocess.run(shlex.split(self._string), capture_output=True, text=True)
+            if show_progress:
+                result = subprocess.run(shlex.split(self._string), stdout=sys.stdout, stderr=sys.stderr)
+            else:
+                result = subprocess.run(shlex.split(self._string), capture_output=True, text=True)
             self._result = result
             return self
         raise Exception("Cannot run a command twice")
