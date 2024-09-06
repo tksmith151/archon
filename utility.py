@@ -40,7 +40,7 @@ class Command:
         if not self._result:
             result = subprocess.run(shlex.split(self._string), capture_output=True, text=True)
             self._result = result
-            return
+            return self
         raise Exception("Cannot run a command twice")
     
     @property
@@ -129,3 +129,6 @@ def list_subvolumes(btrfs_partition):
 
     return sorted(paths)
 
+def write_file(location, data):
+    with open(location, "w") as fd:
+        fd.write(data)

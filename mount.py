@@ -26,7 +26,8 @@ def mount_my(btrfs_partition):
     Command(f"mount --mkdir -o compress=zstd,subvol=@my {btrfs_partition} /mnt/.my").run()
 
 def genfstab():
-    Command("genfstab -U /mnt >> /tmp/fstab").run()
+    fstab = Command("genfstab -U /mnt").run().stdout
+    write_file("/tmp/fstab", fstab)
 
 def unmount_my():
     Command(f"umount /mnt/.my").run()
