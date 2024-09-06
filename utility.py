@@ -122,7 +122,8 @@ def list_subvolumes(btrfs_partition):
     for line in lines:
         fields = line.split(" ")
         path = fields[-1]
-        paths.add(path)
+        if path:
+            paths.add(path)
 
     umount = Command(f"umount /mnt")
     umount.run()
