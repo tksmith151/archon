@@ -32,6 +32,7 @@ def unmount_my():
     Command(f"umount /mnt/.my").run()
 
 def main():
+    Command("umount -R /mnt")
     disk = select_disk()
     efi_partition, btrfs_partition = list_partitions(disk)
     current_subvolumes = list_subvolumes(btrfs_partition)
