@@ -103,7 +103,7 @@ def list_partitions(disk_name: str):
         if partition_type != "part":
             continue
         partition_name = partition["name"]
-        if partition["size"] == "1G":
+        if partition["size"] == "2G":
             efi_partition = f"/dev/{partition_name}"
         else:
             btrfs_partition = f"/dev/{partition_name}"
