@@ -27,7 +27,6 @@ def pacstrap():
         "base linux linux-firmware",
         "base-devel",
         "amd-ucode",
-        "git",
         "efibootmgr grub",
         "grub-btrfs btrfs-progs inotify-tools timeshift",
         "networkmanager",
@@ -43,7 +42,9 @@ def pacstrap():
 
 def main():
     pacstrap()
-
+    copy_file("/tmp/fstab", "/mnt/etc/fstab")
+    copy_file("/lib/firmware/regulatory.db", "/mnt/lib/firmware/regulatory.db")
+    copy_file("/lib/firmware/regulatory.db.p7s", "/mnt/lib/firmware/regulatory.db.p7s")
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,6 @@
 import json
 import shlex
+import shutil
 import subprocess
 import sys
 from typing import List
@@ -136,3 +137,6 @@ def list_subvolumes(btrfs_partition):
 def write_file(location, data):
     with open(location, "w") as fd:
         fd.write(data)
+
+def copy_file(src, dst):
+    shutil.copy(src, dst)
