@@ -16,8 +16,9 @@ def create_subvolumes(btrfs_partition, current_subvolumes):
 
 def mount(efi_partition, btrfs_partition):
     Command("umount /mnt/efi").run()
+    Command("umount /mnt/var/log").run()
+    Command("umount /mnt").run()
     for subvolume, mount in subvolume_mounts.items():
-        Command(f"umount {mount}").run()
         Command(f"mount --mkdir -o compress=zstd,subvol={subvolume} {btrfs_partition} {mount}").run()
     Command(f"mount --mkdir {efi_partition} /mnt/efi").run()
 
@@ -65,7 +66,7 @@ def mount_my(btrfs_partition):
     Command(f"mount --mkdir -o compress=zstd,subvol=@my {btrfs_partition} /mnt/.my").run()
 
 def genfstab():
-    Command("genfstab -U /mnt >> /mnt/etc/fstab").run()
+    Command("genfstab -U /mnt >> /mnt/fstab").run()
 
 def unmount_my():
     Command(f"umount /mnt/.my").run()
