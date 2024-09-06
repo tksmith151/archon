@@ -59,13 +59,13 @@ def pacstrap():
     Command(f"pacstrap -K /mnt {' '.join(install_packages)}")
 
 def mount_my(btrfs_partition):
-    Command(f"mount --mkdir -o compress=zstd,subvol=@my {btrfs_partition} /mnt/my").run()
+    Command(f"mount --mkdir -o compress=zstd,subvol=@my {btrfs_partition} /mnt/.my").run()
 
 def genfstab():
     Command("genfstab -U /mnt >> /mnt/etc/fstab").run()
 
 def unmount_my():
-    Command(f"umount /mnt/my").run()
+    Command(f"umount /mnt/.my").run()
 
 def main():
     disk = select_disk()
