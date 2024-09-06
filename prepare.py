@@ -7,7 +7,7 @@ def partition(disk_name: str):
     gpt.comment("This will destroy data")
     gpt.confirm()
 
-    efi = Command(f'sgdisk -n 1:0:+512MiB -c 1:"EFI-System-Partition" -t 1:ef00 {disk_name}')
+    efi = Command(f'sgdisk -n 1:0:+1GiB -c 1:"EFI-System-Partition" -t 1:ef00 {disk_name}')
     efi.comment("Create efi partition")
     efi.comment("Creates a 512MiB Partition at the first avaialable location")
     efi.confirm()
