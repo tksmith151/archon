@@ -6,12 +6,12 @@ subvolume_mounts = {
 }
 
 def create_subvolumes(btrfs_partition, current_subvolumes):
+    Command(f"umount -R /mnt").run()
     Command(f"mount {btrfs_partition} /mnt").run()
     for needed_subvolume in subvolume_mounts.keys():
         if needed_subvolume in current_subvolumes:
             Command(f"btrfs subvolume delete /mnt/{needed_subvolume}").run()
         Command(f"btrfs subvolume create /mnt/{needed_subvolume}").run()
-    Command(f"umount /mnt").run()
 
 def mount(efi_partition, btrfs_partition):
     Command("umount -R /mnt").run()
