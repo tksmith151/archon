@@ -74,7 +74,7 @@ def main():
     create_subvolumes(btrfs_partition, current_subvolumes)
     mount(efi_partition, btrfs_partition)
     # pacstrap()
-    mount_my()
+    mount_my(btrfs_partition)
     genfstab()
     unmount_my()
 
