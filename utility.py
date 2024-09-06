@@ -127,3 +127,5 @@ def list_subvolumes(btrfs_partition):
     umount = Command(f"umount /mnt")
     umount.run()
 
+    return sorted(paths)
+
