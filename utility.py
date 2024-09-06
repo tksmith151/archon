@@ -110,7 +110,7 @@ def list_partitions(disk_name: str):
     return efi_partition, btrfs_partition
 
 def list_subvolumes(btrfs_partition):
-    Command(f"umount -R /mnt").run()
+    Command(f"umount /mnt").run()
     Command(f"mount {btrfs_partition} /mnt").run()
 
     btrfs = Command(f"btrfs subvolume list -a /mnt")
@@ -125,7 +125,7 @@ def list_subvolumes(btrfs_partition):
         if path:
             paths.add(path)
 
-    Command(f"umount -R /mnt").run()
+    Command(f"umount /mnt").run()
 
     return sorted(paths)
 
