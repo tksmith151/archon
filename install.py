@@ -14,6 +14,7 @@ def create_subvolumes(btrfs_partition, current_subvolumes):
     Command(f"umount /mnt").run()
 
 def mount(efi_partition, btrfs_partition):
+    Command("umount -R /mnt").run()
     for subvolume, mount in subvolume_mounts.items():
         Command(f"mount --mkdir -o compress=zstd,subvol={subvolume} {btrfs_partition} {mount}").run()
     Command(f"mount --mkdir {efi_partition} /mnt/efi").run()
