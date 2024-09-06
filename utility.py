@@ -121,7 +121,7 @@ def list_subvolumes(btrfs_partition):
     lines = output.split("\n")
     for line in lines:
         fields = line.split(" ")
-        path = fields[-1]
+        path = fields[-1].split("/")[-1]
         if path:
             paths.add(path)
 
