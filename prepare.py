@@ -1,7 +1,7 @@
 from utility import *
 
 def partition(disk_name: str):
-    gpt = Command(f"sgdisk -z {disk_name}")
+    gpt = Command(f"sgdisk -og {disk_name}")
     gpt.comment("Clear all partitions from disk")
     gpt.comment("Only do this if you are installing for the first time")
     gpt.comment("This will destroy data")
@@ -20,10 +20,12 @@ def partition(disk_name: str):
 def format(efi_partition, btrfs_partition):
     efi = Command(f"mkfs.fat -F 32 {efi_partition}")
     efi.comment("Format the efi partition")
+    efi.comment("This will destroy data")
     efi.confirm()
 
     btrfs = Command(f"mkfs.btrfs {btrfs_partition}")
     btrfs.comment("Format the btrfs partition")
+    btrfs.comment("This will destroy data")
     btrfs.confirm() 
 
 def subvolume(btrfs_partition: str):
