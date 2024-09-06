@@ -79,8 +79,8 @@ def select_disk():
         print("Disks:")
         for index, disk in enumerate(disks):
             print(index, disk)
-        disk_index = int(input("Select disk by index: "))
         try:
+            disk_index = int(input("Select disk by index: "))
             disk = disks[disk_index]
             output = disk
         except:
