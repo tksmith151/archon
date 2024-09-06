@@ -7,9 +7,9 @@ def partition(disk_name: str):
     gpt.comment("This will destroy data")
     gpt.confirm()
 
-    efi = Command(f'sgdisk -n 1:0:+1GiB -c 1:"EFI-System-Partition" -t 1:ef00 {disk_name}')
+    efi = Command(f'sgdisk -n 1:0:+2GiB -c 1:"EFI-System-Partition" -t 1:ef00 {disk_name}')
     efi.comment("Create efi partition")
-    efi.comment("Creates a 512MiB Partition at the first avaialable location")
+    efi.comment("Creates a 2GiB Partition at the first avaialable location")
     efi.confirm()
 
     btrfs = Command(f'sgdisk -n 2:0:0 -c 2:"BTRFS-Partition" -t 2:8300 {disk_name}')
@@ -27,19 +27,13 @@ def format(efi_partition, btrfs_partition):
     btrfs.confirm() 
 
 def subvolume(btrfs_partition: str):
-    mount = Command(f"mount {btrfs_partition} /mnt")
-    mount.run()
-
-    root = Command("btrfs subvolume create /mnt/@arch-root")
-    root.comment("Add arch btrfs subvolume")
-    root.confirm()
+    Command(f"mount {btrfs_partition} /mnt").run()
 
     root = Command("btrfs subvolume create /mnt/@my")
     root.comment("Add my btrfs subvolume")
     root.confirm()
 
-    umount = Command(f"umount /mnt")
-    umount.run()
+    Command(f"umount /mnt").run()
 
 def main():
     disk = select_disk()
