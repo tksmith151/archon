@@ -21,7 +21,7 @@ def mount(efi_partition, btrfs_partition):
 def main():
     disk = select_disk()
     efi_partition, btrfs_partition = list_partitions(disk)
-    current_subvolumes = list_subvolumes()
+    current_subvolumes = list_subvolumes(btrfs_partition)
     create_subvolumes(btrfs_partition, current_subvolumes)
     mount(efi_partition, btrfs_partition)
 
