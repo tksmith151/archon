@@ -7,12 +7,11 @@ pacman -Sy git
 git clone https://github.com/tksmith151/archon.git
 ```
 
-## Preparing Install
-```bash
-# This will print out commands to prepare your system for installation
-./prepare.py
-```
-
 ## Installing
-```
+```bash
+archon install wipe
+archon install partition
+archon install format
+archon install mount
+archon install bootstrap
 ```

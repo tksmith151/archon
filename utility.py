@@ -23,20 +23,19 @@ class Command:
         print(self._string)
         print()
 
-    def confirm(self):
+    def confirm(self, really=False):
         confirmed = False
         self.show_summary()
         confirmed = input("Perform above command (y/N):")
+        if confirmed != "y":
+            return
+        if really:
+            confirmed = input("Are you sure? (y/N):")
         if confirmed == "y":
             self.run()
             print(self.stderr)
             print(self.stdout)
-            print()
-            return confirmed
         print()
-        return confirmed
-
-
 
     def run(self, show_progress=False):
         if not self._result:
