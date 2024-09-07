@@ -9,5 +9,5 @@ done
 BIN_DIR=$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )
 BASE_DIR=$( cd -P "$( dirname "$BIN_DIR" )" >/dev/null 2>&1 && pwd )
 PYTHONPATH=$BASE_DIR:$PYTHONPATH 
-
-python3 $BASE_DIR/src/archon.py "$@"
+echo $PYTHONPATH
+PYTHONPATH=$BASE_DIR:$PYTHONPATH python3 $BASE_DIR/src/archon.py "$@"
