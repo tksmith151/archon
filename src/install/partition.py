@@ -1,4 +1,4 @@
-from namespace.common import *
+from namespace.standard import *
 
 def partition(disk_name: str):
     print("This action will wipe all partitions from the disk")

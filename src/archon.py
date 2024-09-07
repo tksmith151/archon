@@ -23,10 +23,10 @@ def main():
     args = parse_args()
     command = args.command
     if command == "install":
-        step = arg.step
+        step = args.step
         if step == "partition":
             disk = select_disk()
-            paritition()
+            partition()
 
     print(args.step)
 
