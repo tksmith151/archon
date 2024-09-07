@@ -26,7 +26,7 @@ def main():
         step = args.step
         if step == "partition":
             disk = select_disk()
-            partition()
+            partition(disk)
 
     print(args.step)
 
