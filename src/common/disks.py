@@ -3,7 +3,6 @@ from namespace.common import *
 def list_disks():
     lsblk = Command("lsblk --json")
     lsblk.run()
-    disks: List[str] = []
     output: List[Tuple[str, str]] = []
     devices: List[Dict] = json.loads(lsblk.stdout).get("blockdevices")
     for device in devices:
@@ -12,7 +11,7 @@ def list_disks():
             device_name = device.get("name")
             device_size = device.get("size")
             output.append((f"/dev/{device_name}", str(device_size)))
-    if not disks:
+    if not output:
         raise Exception("No disks found")
     return output
 
