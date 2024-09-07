@@ -28,7 +28,5 @@ def main():
             disk = select_disk()
             partition(disk)
 
-    print(args.step)
-
 if __name__ == "__main__":
     main()

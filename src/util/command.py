@@ -17,12 +17,13 @@ class Command:
     
     def run(self, show_progress=False):
         if not self._result:
-            print(self._string)
+            print("Running:", self._string)
             if show_progress:
                 result = subprocess.run(shlex.split(self._string), stdout=sys.stdout, stderr=sys.stderr)
             else:
                 result = subprocess.run(shlex.split(self._string), capture_output=True, text=True)
             self._result = result
+            print("Done!\n")
             return self
         raise Exception("Cannot run a command twice")
     
