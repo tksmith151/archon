@@ -3,6 +3,7 @@ from namespace.base import *
 class Command:
     def __init__(self, string: str = None, *, quiet=False) -> None:
         self._string: str = string
+        self._quiet: bool = quiet
         self._run()
         self.stdout = None
         self.stderr = None
@@ -19,9 +20,11 @@ class Command:
                     break
                 all_out.append(out)
                 all_err.append(err)
-                print(out, end="", flush=True)
+                if not self._quiet:
+                    print(out, end="", flush=True)
         self.stdout = "".join(all_out)
         self.stderr = "".join(all_err)
+        print(all_out)
         if self.stderr != "":
             print(self.stderr)
         print("Done!\n")
