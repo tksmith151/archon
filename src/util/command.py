@@ -24,7 +24,7 @@ class Command:
                     print(out, end="", flush=True)
         self.stdout = "".join(all_out)
         self.stderr = "".join(all_err)
-        print(all_out)
+        print("".join(all_out))
         if self.stderr != "":
             print(self.stderr)
         print("Done!\n")
