@@ -28,6 +28,8 @@ def main():
         disk = select_disk()
         if "partition" in steps:
             partition(disk)
+        if "mount" in steps:
+            mount(disk)
 
 
 if __name__ == "__main__":
