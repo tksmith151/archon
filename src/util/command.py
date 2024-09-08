@@ -11,9 +11,11 @@ class Command:
         self._run()
     
     def _run(self):
-        self._show("Running:", self._string)
+        self._show(f"Running: {self._string}")
         if not self._capture:
             result = subprocess.run(shlex.split(self._string), stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr)
+            self.code = result.returncode
+            self._check_code()
             return
         all_out = []
         all_err = []
@@ -45,7 +47,12 @@ class Command:
             print()
         else:
             self._show("Success!\n")
+        self._check_code()
 
     def _show(self, text="", end="\n"):
         if not self._quiet:
             print(text, end=end, flush=True)
+
+    def _check_code(self):
+        if self.code != 0:
+            raise Exception(F"Failed!")
