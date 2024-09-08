@@ -19,7 +19,7 @@ class Command:
         all_err = []
         out = ""
         err = ""
-        with subprocess.Popen(shlex.split(self._string), stdin=sys.stdin, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8') as process:
+        with subprocess.Popen(shlex.split(self._string), stdin=subprocess.STDIN, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8') as process:
             while True:
                 while out != "":
                     self._show(out, end="")
