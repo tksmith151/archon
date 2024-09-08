@@ -18,7 +18,7 @@ def partition(disk_name: str):
     # Create luks partition
     Command(f'sgdisk -n 3:0:0 -c 2:"luks" -t 2:8300 {disk_name}').run(show_progress=True)
 
-    partitions = get_partitions()
+    partitions = get_partitions(disk_name)
     # Format efi partition
     Command(f"mkfs.fat -n efi -F 32 {partitions['efi']}").run(show_progress=True)
     # Format boot partition
