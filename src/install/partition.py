@@ -7,8 +7,10 @@ def partition(disk_name: str):
     if not confirmed:
         return
     
+    partitions = get_partitions(disk_name)
     # Clear all partitions on disk
-    Command(f"sfdisk --delete {disk_name}")
+    if partitions:
+        Command(f"sfdisk --delete {disk_name}")
     # Create new gpt
     Command(f"sgdisk -og {disk_name}")
     # Create efi partition
