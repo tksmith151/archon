@@ -15,7 +15,7 @@ class Command:
             while True:
                 out = process.stdout.read(1)
                 err = process.stderr.read(1)
-                if out == "" and err == "" and process.poll() != None:
+                if out == "" and err == "" and process.poll() is not None:
                     break
                 all_out.append(out)
                 all_err.append(err)
