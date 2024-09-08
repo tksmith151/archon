@@ -8,11 +8,12 @@ def parse_args():
 
     install_parser = root_subparsers.add_parser("install")
     install_parser.add_argument(
-        dest="step",
+        dest="steps",
         type=str,
-        choices=['partition', 'format', 'mount'],
-        metavar="STEP",
-        help="installation step",
+        choices=['partition', 'mount'],
+        metavar="STEPS",
+        nargs="+",
+        help="names of steps to run in the install",
     )
     install_parser.set_defaults(command="install")
 
@@ -23,10 +24,11 @@ def main():
     args = parse_args()
     command = args.command
     if command == "install":
-        step = args.step
-        if step == "partition":
-            disk = select_disk()
+        steps = args.steps
+        disk = select_disk()
+        if "partition" in steps:
             partition(disk)
+
 
 if __name__ == "__main__":
     main()

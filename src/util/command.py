@@ -19,7 +19,7 @@ class Command:
         if not self._result:
             print("Running:", self._string)
             if show_progress:
-                result = subprocess.run(shlex.split(self._string), stdout=sys.stdout, stderr=sys.stderr)
+                result = subprocess.run(shlex.split(self._string), stdin=sys.stdin ,stdout=sys.stdout, stderr=sys.stderr)
             else:
                 result = subprocess.run(shlex.split(self._string), capture_output=True, text=True)
             self._result = result
