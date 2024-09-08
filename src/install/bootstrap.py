@@ -2,7 +2,7 @@ from namespace.standard import *
 
 def bootstrap():
     # TODO: Check for mounts
-    Command(f"pacstrap -K /mnt base linux linux-firmware")
+    Command(f"pacstrap -K /mnt base linux linux-firmware",capture=False)
     # Copy fstab
     copy_file("/tmp/fstab", "/mnt/etc/fstab")
     # Needed for wireless cards
