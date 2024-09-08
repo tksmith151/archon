@@ -27,6 +27,7 @@ class Command:
             self.stderr = "".join(all_err)
             if self.stderr != "":
                 print(self.stderr)
+            print("Finshed")
         self._show("Done!\n")
 
     def _show(self, text, end="\n"):
