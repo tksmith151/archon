@@ -1,42 +1,27 @@
 from namespace.base import *
 
 class Command:
-    def __init__(self, string: str = None) -> None:
+    def __init__(self, string: str = None, *, quiet=False) -> None:
         self._string: str = string
-        self._comments: List[str] = []
-        self._result = None
-
-    def comment(self, description: str):
-        self._comments.append(f"# {description}")
-
-    def show_summary(self):
-        for line in self._comments:
-            print(line)
-        print(self._string)
-        print()
+        self._run()
+        self.stdout = None
+        self.stderr = None
     
-    def run(self, capture_output=False):
-        if not self._result:
-            print("Running:", self._string)
-            if capture_output:
-                result = subprocess.run(shlex.split(self._string), capture_output=True, text=True)
-            else:
-                result = subprocess.run(shlex.split(self._string), stdin=sys.stdin ,stdout=sys.stdout, stderr=sys.stderr)
-            self._result = result
-            print("Done!\n")
-            return self
-        raise Exception("Cannot run a command twice")
-    
-    @property
-    def stdout(self):
-        if not self._result:
-            raise Exception("Must run command first")
-        output: str = self._result.stdout
-        return output
-    
-    @property
-    def stderr(self):
-        if not self._result:
-            raise Exception("Must run command first")
-        output: str = self._result.stderr
-        return output
+    def _run(self):
+        print("Running:", self._string)
+        all_out = []
+        all_err = []
+        with subprocess.Popen(shlex.split(self._string), stdin=sys.stdin, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8') as process:
+            while True:
+                out = process.stdout.read(1)
+                err = process.stderr.read(1)
+                if out == "" and err == "" and process.poll() != None:
+                    break
+                all_out.append(out)
+                all_err.append(err)
+                print(out, end="", flush=True)
+        self.stdout = "".join(all_out)
+        self.stderr = "".join(all_err)
+        if self.stderr != "":
+            print(self.stderr)
+        print("Done!\n")

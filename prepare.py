@@ -31,9 +31,9 @@ def format(efi_partition, btrfs_partition):
 def subvolume(btrfs_partition: str):
     current_subvolumes = list_subvolumes(btrfs_partition)
     if "@my" not in current_subvolumes:
-        Command(f"mount {btrfs_partition} /mnt").run()
-        Command("btrfs subvolume create /mnt/@my").run()
-        Command(f"umount /mnt").run()
+        Command(f"mount {btrfs_partition} /mnt")
+        Command("btrfs subvolume create /mnt/@my")
+        Command(f"umount /mnt")
 
 def main():
     disk = select_disk()

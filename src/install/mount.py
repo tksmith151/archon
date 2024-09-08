@@ -19,45 +19,45 @@ def mount(disk_name: str):
 
     # Unlock luks if necessary
     if not os.path.exists(btrfs_partition):
-        Command(f"cryptsetup open --type luks {partitions['luks']} btrfs").run()
+        Command(f"cryptsetup open --type luks {partitions['luks']} btrfs")
     
     current_subvolumes = list_subvolumes(btrfs_partition)
     unmount_all()
-    Command(f"mount {btrfs_partition} /mnt").run()
+    Command(f"mount {btrfs_partition} /mnt")
     if "@my" not in current_subvolumes:
-        Command("btrfs subvolume create /mnt/@my").run()
+        Command("btrfs subvolume create /mnt/@my")
     if "@" in current_subvolumes:
-        Command(f"btrfs subvolume delete /mnt/@").run()
-    Command(f"btrfs subvolume create /mnt/@").run()
+        Command(f"btrfs subvolume delete /mnt/@")
+    Command(f"btrfs subvolume create /mnt/@")
     for needed_subvolume in subvolume_mounts.keys():
         if needed_subvolume in current_subvolumes:
-            Command(f"btrfs subvolume delete /mnt/{needed_subvolume}").run()
-        Command(f"btrfs subvolume create /mnt/{needed_subvolume}").run()
+            Command(f"btrfs subvolume delete /mnt/{needed_subvolume}")
+        Command(f"btrfs subvolume create /mnt/{needed_subvolume}")
 
     # Clean mounts
     unmount_all()
 
     # Mount btrfs arch subvolumes
-    Command(f"mount -o compress=zstd,subvol=@ {btrfs_partition} /mnt").run()
+    Command(f"mount -o compress=zstd,subvol=@ {btrfs_partition} /mnt")
     for subvolume, mount in subvolume_mounts.items():
         os.makedirs(mount, exist_ok=True)
-        Command(f"mount -o compress=zstd,subvol={subvolume} {btrfs_partition} {mount}").run()
+        Command(f"mount -o compress=zstd,subvol={subvolume} {btrfs_partition} {mount}")
 
     # Mount boot
     os.makedirs("/mnt/boot", exist_ok=True)
-    Command(f"mount {partitions['boot']} /mnt/boot").run()
+    Command(f"mount {partitions['boot']} /mnt/boot")
 
     # Mount @my
     os.makedirs("/mnt/my", exist_ok=True)
-    Command(f"mount -o compress=zstd,subvol=@my {btrfs_partition} /mnt/my").run()
+    Command(f"mount -o compress=zstd,subvol=@my {btrfs_partition} /mnt/my")
 
     # Generate fstab
-    fstab = Command("genfstab -U /mnt").run(capture_output=True).stdout
+    fstab = Command("genfstab -U /mnt", quiet=True).stdout
     write_file("/tmp/fstab", fstab)
 
     # Mount efi after generating fstab
     os.makedirs("/mnt/efi", exist_ok=True)
-    Command(f"mount {partitions['efi']} /mnt/efi").run()
+    Command(f"mount {partitions['efi']} /mnt/efi")
 
 
 

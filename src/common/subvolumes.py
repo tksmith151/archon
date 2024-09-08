@@ -13,13 +13,13 @@ def unmount_all():
     ]
     for mount_path in mount_paths:
         if os.path.ismount(mount_path):
-            Command(f"umount {mount_path}").run()
+            Command(f"umount {mount_path}")
 
 def list_subvolumes(btrfs_partition):
     unmount_all()
-    Command(f"mount {btrfs_partition} /mnt").run()
+    Command(f"mount {btrfs_partition} /mnt")
 
-    btrfs = Command(f"btrfs subvolume list -a /mnt").run(capture_output=True)
+    btrfs = Command(f"btrfs subvolume list -a /mnt", quiet=True)
     output = btrfs.stdout
     
     paths = set()

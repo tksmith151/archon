@@ -1,9 +1,9 @@
 from namespace.common import *
 
 def get_partitions(disk_name: str):
-    sfdisk = Command(f"sfdisk --json {disk_name}").run(capture_output=True)
+    sfdisk = Command(f"sfdisk --json {disk_name}", quiet=True)
     table = json.loads(sfdisk.stdout)["partitiontable"]
-    partition_data = table["partitions"]
+    partition_data: List[Dict] = table["partitions"]
     partitions: Dict[str, str] = {}
     for partition in partition_data:
         name = partition.get("name", None)

@@ -32,7 +32,7 @@ class Command:
         if really:
             confirmed = input("Are you sure? (y/N):")
         if confirmed == "y":
-            self.run()
+            self
             print(self.stderr)
             print(self.stdout)
         print()
@@ -62,7 +62,7 @@ def select_disk():
 
 def list_disks():
     lsblk = Command("lsblk --json")
-    lsblk.run()
+    lsblk
     disks: List[str] = []
     output: List[str] = []
     for device in json.loads(lsblk.stdout).get("blockdevices"):
@@ -95,7 +95,7 @@ def select_disk():
 
 def list_partitions(disk_name: str):
     lsblk = Command(f"lsblk --json {disk_name}")
-    lsblk.run()
+    lsblk
     efi_partition = None
     btrfs_partition = None
     drive = json.loads(lsblk.stdout).get("blockdevices")[0]
@@ -114,11 +114,11 @@ def list_partitions(disk_name: str):
     return efi_partition, btrfs_partition
 
 def list_subvolumes(btrfs_partition):
-    Command(f"umount /mnt").run()
-    Command(f"mount {btrfs_partition} /mnt").run()
+    Command(f"umount /mnt")
+    Command(f"mount {btrfs_partition} /mnt")
 
     btrfs = Command(f"btrfs subvolume list -a /mnt")
-    btrfs.run()
+    btrfs
     output = btrfs.stdout
     
     paths = set()
@@ -129,7 +129,7 @@ def list_subvolumes(btrfs_partition):
         if path:
             paths.add(path)
 
-    Command(f"umount /mnt").run()
+    Command(f"umount /mnt")
 
     return sorted(paths)
 
