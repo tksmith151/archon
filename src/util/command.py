@@ -42,6 +42,6 @@ class Command:
         else:
             self._show("Success!\n")
 
-    def _show(self, text, end="\n"):
+    def _show(self, text="", end="\n"):
         if not self._quiet:
             print(text, end=end, flush=True)

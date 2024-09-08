@@ -26,7 +26,7 @@ def partition(disk_name: str):
     # Format luks partition
     # cryptsetup luksFormat
     # cryptsetup open --type luks
-    Command(f"cryptsetup --batch-mode luksFormat {partitions['luks']}")
+    Command(f"cryptsetup --batch-mode --verify-passphrase luksFormat {partitions['luks']}")
     Command(f"cryptsetup open --type luks {partitions['luks']} btrfs")
     # Format btrfs mapping
     btrfs_partition = "/dev/mapper/btrfs"
