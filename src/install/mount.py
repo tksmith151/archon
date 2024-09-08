@@ -52,7 +52,7 @@ def mount(disk_name: str):
     Command(f"mount -o compress=zstd,subvol=@my {btrfs_partition} /mnt/my").run()
 
     # Generate fstab
-    fstab = Command("genfstab -U /mnt").run().stdout
+    fstab = Command("genfstab -U /mnt").run(capture_output=True).stdout
     write_file("/tmp/fstab", fstab)
 
     # Mount efi after generating fstab
