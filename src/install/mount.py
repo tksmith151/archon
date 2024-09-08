@@ -22,15 +22,24 @@ def mount(disk_name: str):
         Command(f"cryptsetup open --type luks {partitions['luks']} btrfs").run(show_progress=True)
     
     current_subvolumes = list_subvolumes(btrfs_partition)
-    Command("umount -a").run()
+    Command(f"umount /mnt").run()
     Command(f"mount {btrfs_partition} /mnt").run()
+    if "@my" not in current_subvolumes:
+        Command("btrfs subvolume create /mnt/@my").run()
     for needed_subvolume in subvolume_mounts.keys():
         if needed_subvolume in current_subvolumes:
             Command(f"btrfs subvolume delete /mnt/{needed_subvolume}").run()
         Command(f"btrfs subvolume create /mnt/{needed_subvolume}").run()
+    Command(f"umount /mnt").run()
 
     # Clean mounts
-    Command("umount -a").run()
+    Command("umount /mnt/efi").run()
+    Command("umount /mnt/boot").run()
+    Command("umount /mnt/my").run()
+    Command("umount /mnt/var/log").run()
+    Command("umount /mnt/var/cache/pacman/pkg").run()
+    Command("umount /mnt/.snapshots").run()
+    Command("umount /mnt").run()
 
     # Mount btrfs arch subvolumes
     Command(f"mount --mkdir -o compress=zstd,subvol=@ {btrfs_partition} /mnt").run()

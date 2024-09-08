@@ -28,12 +28,9 @@ def partition(disk_name: str):
     # cryptsetup open --type luks
     Command(f"cryptsetup luksFormat {partitions['luks']}").run(show_progress=True)
     Command(f"cryptsetup open --type luks {partitions['luks']} btrfs").run(show_progress=True)
+    # Format btrfs mapping
     btrfs_partition = "/dev/mapper/btrfs"
     Command(f"mkfs.btrfs {btrfs_partition}").run(show_progress=True)
-    # Create my subvolume
-    Command(f"mount {btrfs_partition} /mnt").run()
-    Command("btrfs subvolume create /mnt/@my").run()
-    Command(f"umount /mnt").run()
 
 def main():
     disk = select_disk()
