@@ -20,9 +20,9 @@ def partition(disk_name: str):
 
     partitions = get_partitions(disk_name)
     # Format efi partition
-    Command(f"mkfs.fat -n efi -F 32 {partitions['efi']}").run(show_progress=True)
+    Command(f"mkfs.fat -F 32 {partitions['efi']}").run(show_progress=True)
     # Format boot partition
-    Command(f"mkfs.ext4 -L boot {partitions['boot']}")
+    Command(f"mkfs.ext4 {partitions['boot']}").run(show_progress=True)
     # Format luks partition
     # cryptsetup luksFormat
     # cryptsetup open --type luks
