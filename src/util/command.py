@@ -13,16 +13,22 @@ class Command:
         self._show("Running:", self._string)
         all_out = []
         all_err = []
+        out = ""
+        err = ""
         with subprocess.Popen(shlex.split(self._string), stdin=sys.stdin, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8') as process:
             while True:
+                while out != "":
+                    self._show(out, end="")
+                    all_out.append(out)
+                    out = process.stdout.read(1)   
+                while err != "":
+                    self._show(err, end="")
+                    all_err.append(err)
+                    err = process.stderr.read(1)
                 out = process.stdout.read(1)
                 err = process.stderr.read(1)
                 if out == "" and err == "" and process.poll() is not None:
                     break
-                all_out.append(out)
-                all_err.append(err)
-                self._show(out, end="")
-                self._show(err, end="")
             self.code = process.wait()
         self.stdout = "".join(all_out)
         self.stderr = "".join(all_err)
