@@ -5,11 +5,12 @@ class Command:
         self._string: str = string
         self._quiet: bool = quiet
         self._run()
+        self.code = None
         self.stdout = None
         self.stderr = None
     
     def _run(self):
-        print("Running:", self._string)
+        self._show("Running:", self._string)
         all_out = []
         all_err = []
         with subprocess.Popen(shlex.split(self._string), stdin=sys.stdin, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8') as process:
@@ -20,11 +21,14 @@ class Command:
                     break
                 all_out.append(out)
                 all_err.append(err)
-                if not self._quiet:
-                    print(out, end="", flush=True)
-        self.stdout = "".join(all_out)
-        self.stderr = "".join(all_err)
-        print("".join(all_out))
-        if self.stderr != "":
-            print(self.stderr)
-        print("Done!\n")
+                self._show(out, end="")
+            self.code = process.wait()
+            self.stdout = "".join(all_out)
+            self.stderr = "".join(all_err)
+            if self.stderr != "":
+                print(self.stderr)
+        self._show("Done!\n")
+
+    def _show(self, text, end="\n"):
+        if not self._quiet:
+            print(text, end=end, flush=True)
