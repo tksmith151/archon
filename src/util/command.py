@@ -15,8 +15,8 @@ class Command:
         all_err = []
         with subprocess.Popen(shlex.split(self._string), stdin=sys.stdin, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8') as process:
             while True:
-                out = process.stdout.read(1)
-                err = process.stderr.read(1)
+                out = process.stdout.readline()
+                err = process.stderr.readline()
                 if out == "" and err == "" and process.poll() is not None:
                     break
                 all_out.append(out)
