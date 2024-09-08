@@ -1,9 +1,10 @@
 from namespace.base import *
 
 class Command:
-    def __init__(self, string: str = None, *, quiet=False) -> None:
+    def __init__(self, string: str = None, *, quiet=False, capture=True) -> None:
         self._string: str = string
         self._quiet: bool = quiet
+        self._capture: bool = capture
         self.code = None
         self.stdout = None
         self.stderr = None
@@ -11,6 +12,9 @@ class Command:
     
     def _run(self):
         self._show("Running:", self._string)
+        if not self._capture:
+            result = subprocess.run(shlex.split(self._string), stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr)
+            return
         all_out = []
         all_err = []
         out = ""

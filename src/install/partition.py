@@ -30,7 +30,7 @@ def partition(disk_name: str):
     Command(f"cryptsetup open --type luks {partitions['luks']} btrfs")
     # Format btrfs mapping
     btrfs_partition = "/dev/mapper/btrfs"
-    Command(f"mkfs.btrfs {btrfs_partition}")
+    Command(f"mkfs.btrfs -f {btrfs_partition}")
 
 def main():
     disk = select_disk()
