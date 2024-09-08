@@ -19,8 +19,7 @@ def list_subvolumes(btrfs_partition):
     unmount_all()
     Command(f"mount {btrfs_partition} /mnt").run()
 
-    btrfs = Command(f"btrfs subvolume list -a /mnt")
-    btrfs.run()
+    btrfs = Command(f"btrfs subvolume list -a /mnt").run(capture_output=True)
     output = btrfs.stdout
     
     paths = set()

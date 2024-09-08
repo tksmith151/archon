@@ -2,7 +2,7 @@ from namespace.common import *
 
 def list_disks():
     lsblk = Command("lsblk --json")
-    lsblk.run()
+    lsblk.run(capture_output=True)
     output: List[Tuple[str, str]] = []
     devices: List[Dict] = json.loads(lsblk.stdout).get("blockdevices")
     for device in devices:

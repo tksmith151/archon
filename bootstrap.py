@@ -37,7 +37,7 @@ def pacstrap():
         "man",
         "sudo",
     ]
-    Command(f"pacstrap -K /mnt {' '.join(install_packages)}").run(show_progress=True)
+    Command(f"pacstrap -K /mnt {' '.join(install_packages)}").run()
 
 
 def main():

@@ -19,13 +19,16 @@ def mount(disk_name: str):
 
     # Unlock luks if necessary
     if not os.path.exists(btrfs_partition):
-        Command(f"cryptsetup open --type luks {partitions['luks']} btrfs").run(show_progress=True)
+        Command(f"cryptsetup open --type luks {partitions['luks']} btrfs").run()
     
     current_subvolumes = list_subvolumes(btrfs_partition)
     unmount_all()
     Command(f"mount {btrfs_partition} /mnt").run()
     if "@my" not in current_subvolumes:
         Command("btrfs subvolume create /mnt/@my").run()
+    if "@" in current_subvolumes:
+        Command(f"btrfs subvolume delete /mnt/@").run()
+    Command(f"btrfs subvolume create /mnt/@").run()
     for needed_subvolume in subvolume_mounts.keys():
         if needed_subvolume in current_subvolumes:
             Command(f"btrfs subvolume delete /mnt/{needed_subvolume}").run()

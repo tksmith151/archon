@@ -15,13 +15,13 @@ class Command:
         print(self._string)
         print()
     
-    def run(self, show_progress=False):
+    def run(self, capture_output=False):
         if not self._result:
             print("Running:", self._string)
-            if show_progress:
-                result = subprocess.run(shlex.split(self._string), stdin=sys.stdin ,stdout=sys.stdout, stderr=sys.stderr)
-            else:
+            if capture_output:
                 result = subprocess.run(shlex.split(self._string), capture_output=True, text=True)
+            else:
+                result = subprocess.run(shlex.split(self._string), stdin=sys.stdin ,stdout=sys.stdout, stderr=sys.stderr)
             self._result = result
             print("Done!\n")
             return self
