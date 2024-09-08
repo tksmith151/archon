@@ -35,22 +35,26 @@ def mount(disk_name: str):
     unmount_all()
 
     # Mount btrfs arch subvolumes
-    Command(f"mount --mkdir -o compress=zstd,subvol=@ {btrfs_partition} /mnt").run()
+    Command(f"mount -o compress=zstd,subvol=@ {btrfs_partition} /mnt").run()
     for subvolume, mount in subvolume_mounts.items():
-        Command(f"mount --mkdir -o compress=zstd,subvol={subvolume} {btrfs_partition} {mount}").run()
+        os.makedirs(mount, exist_ok=True)
+        Command(f"mount -o compress=zstd,subvol={subvolume} {btrfs_partition} {mount}").run()
 
     # Mount boot
-    Command(f"mount --mkdir {partitions['boot']} /mnt/boot").run()
+    os.makedirs("/mnt/boot", exist_ok=True)
+    Command(f"mount {partitions['boot']} /mnt/boot").run()
 
     # Mount @my
-    Command(f"mount --mkdir -o compress=zstd,subvol=@my {btrfs_partition} /mnt/my").run()
+    os.makedirs("/mnt/my", exist_ok=True)
+    Command(f"mount -o compress=zstd,subvol=@my {btrfs_partition} /mnt/my").run()
 
     # Generate fstab
     fstab = Command("genfstab -U /mnt").run().stdout
     write_file("/tmp/fstab", fstab)
 
     # Mount efi after generating fstab
-    Command(f"mount --mkdir {partitions['efi']} /mnt/efi").run()
+    os.makedirs("/mnt/efi", exist_ok=True)
+    Command(f"mount {partitions['efi']} /mnt/efi").run()
 
 
 
