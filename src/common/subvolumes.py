@@ -1,7 +1,22 @@
 from namespace.common import *
 
+def unmount_all():
+    mount_paths = [
+        "/mnt/efi",
+        "/mnt/boot",
+        "/mnt/home",
+        "/mnt/var/log",
+        "/mnt/var/cache/pacman/pkg",
+        "/mnt/.snapshots",
+        "/mnt/my",
+        "/mnt"
+    ]
+    for mount_path in mount_paths:
+        if os.path.ismount(mount_path):
+            Command(f"umount {mount_path}").run()
+
 def list_subvolumes(btrfs_partition):
-    Command(f"umount /mnt").run()
+    unmount_all()
     Command(f"mount {btrfs_partition} /mnt").run()
 
     btrfs = Command(f"btrfs subvolume list -a /mnt")
@@ -16,6 +31,6 @@ def list_subvolumes(btrfs_partition):
         if path:
             paths.add(path)
 
-    Command(f"umount /mnt").run()
+    unmount_all()
 
     return sorted(paths)
