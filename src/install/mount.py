@@ -15,7 +15,7 @@ def mount(disk_name: str):
         return
     
     btrfs_partition = "/dev/mapper/btrfs"
-    partitions = get_partitions()
+    partitions = get_partitions(disk_name)
 
     # Unlock luks if necessary
     if not os.path.exists(btrfs_partition):
