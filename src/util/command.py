@@ -4,10 +4,10 @@ class Command:
     def __init__(self, string: str = None, *, quiet=False) -> None:
         self._string: str = string
         self._quiet: bool = quiet
-        self._run()
         self.code = None
         self.stdout = None
         self.stderr = None
+        self._run()
     
     def _run(self):
         self._show("Running:", self._string)
@@ -23,12 +23,17 @@ class Command:
                 all_err.append(err)
                 self._show(out, end="")
             self.code = process.wait()
-            self.stdout = "".join(all_out)
-            self.stderr = "".join(all_err)
-            if self.stderr != "":
-                print(self.stderr)
-            print("Finshed")
-        self._show("Done!\n")
+        self.stdout = "".join(all_out)
+        self.stderr = "".join(all_err)
+        if self.stderr != "":
+            if self.code != 0:
+                print("ERROR!")
+            else:
+                print("Warning!")
+            print(self.stderr)
+            print()
+        else:
+            self._show("Success!\n")
 
     def _show(self, text, end="\n"):
         if not self._quiet:
