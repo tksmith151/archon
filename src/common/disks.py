@@ -15,7 +15,9 @@ def list_disks():
         raise Exception("No disks found")
     return output
 
-def select_disk():
+def select_disk(disk=None):
+    if disk is not None:
+        return disk
     output = None
     while output is None:
         disks = list_disks()

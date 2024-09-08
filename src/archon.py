@@ -10,7 +10,7 @@ def parse_args():
     install_parser.add_argument(
         dest="steps",
         type=str,
-        choices=['partition', 'mount'],
+        choices=['partition', 'mount', 'bootstrap'],
         metavar="STEPS",
         nargs="+",
         help="names of steps to run in the install",
@@ -25,11 +25,15 @@ def main():
     command = args.command
     if command == "install":
         steps = args.steps
-        disk = select_disk()
+        disk = None
         if "partition" in steps:
+            disk = select_disk(disk)
             partition(disk)
         if "mount" in steps:
+            disk = select_disk(disk)
             mount(disk)
+        if "bootstrap" in steps:
+            bootstrap()
 
 
 if __name__ == "__main__":
