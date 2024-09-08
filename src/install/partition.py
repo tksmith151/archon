@@ -14,9 +14,9 @@ def partition(disk_name: str):
     # Create efi partition
     Command(f'sgdisk -n 1:0:+1GiB -c 1:"efi" -t 1:ef00 {disk_name}').run(show_progress=True)
     # Create boot partition
-    Command(f'sgdisk -n 2:0:+1GiB -c 1:"boot" -t 1:ef02 {disk_name}').run(show_progress=True)
+    Command(f'sgdisk -n 2:0:+1GiB -c 2:"boot" -t 2:ef02 {disk_name}').run(show_progress=True)
     # Create luks partition
-    Command(f'sgdisk -n 3:0:0 -c 2:"luks" -t 2:8300 {disk_name}').run(show_progress=True)
+    Command(f'sgdisk -n 3:0:0 -c 3:"luks" -t 3:8300 {disk_name}').run(show_progress=True)
 
     partitions = get_partitions(disk_name)
     # Format efi partition
