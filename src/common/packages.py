@@ -1,11 +1,29 @@
 from namespace.common import *
 
+def base_packages():
+    return ["base"]
+
+def kernel_packages():
+    output = [
+        "linux",
+        "linux-headers",
+        "linux-lts",
+        "linux-lts-headers",
+        "linux-firmware",
+    ]
+    return output
+
+def bootstrap_packages():
+    output = base_packages()
+    output.extend(kernel_packages())
+    return output
+
 def get_configured_packages():
     base_path = pathlib.Path(__file__).parent.parent.parent.resolve()
     packages_file = base_path / "conf" / "packages"
     text = read_file(str(packages_file))
     lines = text.split("\n")
-    packages = []
+    packages = bootstrap_packages()
     for line in lines:
         if line[0] == '#':
             continue
