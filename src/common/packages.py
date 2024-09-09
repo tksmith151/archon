@@ -11,4 +11,4 @@ def get_configured_packages():
             continue
         line_packages = set(line.split(" "))
         packages.update(line_packages)
-    return packages
+    return sorted(packages)
