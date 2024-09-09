@@ -9,4 +9,4 @@ def write_file(location, data):
 
 def read_file(location):
     with open(location, "r") as fd:
-        return fd.readlines()
+        return fd.read()
