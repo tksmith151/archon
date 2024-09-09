@@ -21,8 +21,6 @@ def parse_args():
 
 
 def main():
-    print(get_configured_packages())
-    return
     args = parse_args()
     command = args.command
     if command == "install":
