@@ -30,7 +30,7 @@ def config_pacman():
         "XferCommand       = /usr/bin/curl -C - -f %u > %o",
         "CleanMethod       = KeepInstalled",
         "Architecture      = auto",
-        "ParallelDownloads = 6"
+        "ParallelDownloads = 6",
         "SigLevel = Required TrustedOnly",
         "Color",
         "CheckSpace",
