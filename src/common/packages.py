@@ -13,3 +13,39 @@ def get_configured_packages():
         packages.extend(line_packages)
     output = list(dict.fromkeys(packages))
     return output
+
+def update_mirrors():
+    Command("reflector --connection-timeout 1 --threads 2  --protocol https --sort rate --country US,CA --score 20 --save /etc/pacman.d/mirrorlist")
+
+def config_pacman():
+    lines = [
+        "# See the pacman.conf(5) manpage for option and repository directives \n",
+        "[options]",
+        "RootDir           = /",
+        "DBPath            = /var/lib/pacman/",
+        "LogFile           = /var/log/pacman.log",
+        "GPGDir            = /etc/pacman.d/gnupg/",
+        "HoldPkg           = pacman glibc",
+        "SyncFirst         = pacman",
+        "XferCommand       = /usr/bin/curl -C - -f %u > %o",
+        "CleanMethod       = KeepInstalled",
+        "Architecture      = auto",
+        "ParallelDownloads = 6"
+        "SigLevel = Required TrustedOnly",
+        "Color",
+        "CheckSpace",
+        "",
+        "[core]",
+        "Include = /etc/pacman.d/mirrorlist",
+        "",
+        "[extra]",
+        "Include = /etc/pacman.d/mirrorlist",
+        "",
+        "[community]",
+        "Include = /etc/pacman.d/mirrorlist",
+        "",
+        "[multilib]",
+        "Include = /etc/pacman.d/mirrorlist",
+        "",
+    ]
+    write_file("/etc/pacman.conf", "\n".join(lines))

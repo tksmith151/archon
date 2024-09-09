@@ -1,6 +1,7 @@
 from namespace.standard import *
 
 def prepare():
+    config_pacman()
     update_mirrors()
 
 
