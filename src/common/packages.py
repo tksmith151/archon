@@ -30,7 +30,7 @@ def config_pacman():
         "CleanMethod       = KeepInstalled",
         "Architecture      = auto",
         "ParallelDownloads = 6",
-        "SigLevel = Required DatabaseOptional TrustedOnly",
+        "SigLevel          = Required DatabaseOptional TrustedOnly",
         "Color",
         "CheckSpace",
         "ILoveCandy",
