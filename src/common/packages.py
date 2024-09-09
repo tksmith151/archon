@@ -34,7 +34,7 @@ def config_pacman():
         "SigLevel = Required DatabaseOptional TrustedOnly",
         "Color",
         "CheckSpace",
-        "ILoveCandy"
+        "ILoveCandy",
         "",
         "[core]",
         "SigLevel = PackageRequired",
