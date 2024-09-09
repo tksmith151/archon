@@ -1,0 +1,24 @@
+# 
+base base-devel
+# Kernels
+linux linux-headers linux-firmware
+linux-lts linux-lts-headers
+#
+amd-ucode
+#
+efibootmgr grub
+#
+grub-btrfs btrfs-progs inotify-tools timeshift
+#
+networkmanager
+# Audio
+pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber
+# 
+reflector
+# General
+openssh
+man
+sudo
+nano
+# Development
+git
