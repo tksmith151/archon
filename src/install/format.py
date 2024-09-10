@@ -34,7 +34,7 @@ def format(disk_name: str, system_password: str):
     
     btrfs_partition = "/dev/mapper/btrfs"
     if not os.path.exists(btrfs_partition):
-        Command(f"cryptsetup open --type luks {luks_partition} btrfs")
+        Command(f"cryptsetup open --type luks --key-file /tmp/system_password {luks_partition} btrfs")
 
     # Format btrfs mapping
     if get_filesystem_type(btrfs_partition) is None:
