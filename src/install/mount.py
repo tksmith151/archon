@@ -24,13 +24,13 @@ def mount(disk_name: str):
         os.makedirs(mount, exist_ok=True)
         Command(f"mount -o compress=zstd,subvol={subvolume} {btrfs_partition} {mount}")
 
-    # Mount boot
-    os.makedirs("/mnt/boot", exist_ok=True)
-    Command(f"mount {partitions['boot']} /mnt/boot")
-
     # Mount @my
     os.makedirs("/mnt/my", exist_ok=True)
     Command(f"mount -o compress=zstd,subvol=@my {btrfs_partition} /mnt/my")
+
+    # Mount boot
+    os.makedirs("/mnt/boot", exist_ok=True)
+    Command(f"mount {partitions['boot']} /mnt/boot")
 
     # Generate fstab
     fstab = Command("genfstab -U /mnt", quiet=True).stdout

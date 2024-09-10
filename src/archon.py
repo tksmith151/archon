@@ -6,18 +6,25 @@ def parse_args():
         title="commands", help="Arch Linux Operations"
     )
 
+    install_choices = ['all', 'prepare', 'partition', 'format', 'clean', 'mount', 'bootstrap']
     install_parser = root_subparsers.add_parser("install")
     install_parser.add_argument(
         dest="steps",
         type=str,
-        choices=['prepare', 'partition', 'format', 'clean', 'mount', 'bootstrap'],
+        choices=install_choices,
         metavar="STEPS",
         nargs="+",
         help="names of steps to run in the install",
     )
     install_parser.set_defaults(command="install")
 
-    return root_parser.parse_args()
+    args = root_parser.parse_args()
+
+    if args.command == "install":
+        if "all" in args.steps:
+            args.steps = install_choices
+
+    return args
 
 
 def main():
