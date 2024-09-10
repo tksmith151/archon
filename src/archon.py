@@ -10,7 +10,7 @@ def parse_args():
     install_parser.add_argument(
         dest="steps",
         type=str,
-        choices=['prepare', 'partition', 'format', 'mount', 'bootstrap'],
+        choices=['prepare', 'partition', 'format', 'clean', 'mount', 'bootstrap'],
         metavar="STEPS",
         nargs="+",
         help="names of steps to run in the install",
@@ -34,6 +34,9 @@ def main():
         if "format" in steps:
             disk = select_disk(disk)
             format(disk)
+        if "clean" in steps:
+            disk = select_disk(disk)
+            clean(disk)
         if "mount" in steps:
             disk = select_disk(disk)
             mount(disk)

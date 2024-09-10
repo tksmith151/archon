@@ -23,6 +23,8 @@ def format(disk_name: str):
     if get_filesystem_type(btrfs_partition) is None:
         Command(f"mkfs.btrfs -f {btrfs_partition}")
 
+    # TODO: Verify file system types
+
 def main():
     disk = select_disk()
     format(disk)
