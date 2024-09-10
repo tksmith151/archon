@@ -29,7 +29,6 @@ def verify_partitions(disk_name: str):
             continue
         node = partition["node"]
         ptype = partition["type"]
-        print(ptype)
         if name == "efi":
             if node[-1] != "1":
                 raise Exception("efi partition has wrong number")
