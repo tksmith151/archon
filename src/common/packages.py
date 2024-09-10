@@ -1,7 +1,11 @@
 from namespace.common import *
 
 def base_packages():
-    return ["base"]
+    return [
+        "base",
+        "linux",
+        "linux-firmware",
+    ]
 
 def kernel_packages():
     output = [
