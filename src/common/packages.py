@@ -33,7 +33,7 @@ def get_configured_packages():
     return output
 
 def update_mirrors():
-    Command("reflector --connection-timeout 1 --threads 2  --protocol https --sort rate --country US,CA --score 20 --save /etc/pacman.d/mirrorlist")
+    Command("reflector --connection-timeout 1 --threads 2 --url https://archlinux.org/mirrors/status/tier/1/json/ --protocol https --sort rate --country US,CA --save /etc/pacman.d/mirrorlist")
 
 def config_pacman():
     lines = [
