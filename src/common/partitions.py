@@ -17,7 +17,7 @@ def get_partitions(disk_name: str):
         return None
     
 def get_filesystem_type(partition_name: str):
-    lsblk = Command(f"lsblk --json {partition_name}", quiet=True)
+    lsblk = Command(f"lsblk -f --json {partition_name}", quiet=True)
     devices: List[Dict] = json.loads(lsblk.stdout).get("blockdevices")
     filesystem = devices[0]
     fstype = filesystem["fstype"]
