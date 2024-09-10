@@ -33,21 +33,21 @@ def verify_partitions(disk_name: str):
         if name == "efi":
             if node[-1] != "1":
                 raise Exception("efi partition has wrong number")
-            if not ptype != "C12A7328-F81F-11D2-BA4B-00A0C93EC93B":
+            if  ptype != "C12A7328-F81F-11D2-BA4B-00A0C93EC93B":
                 raise Exception("efi partition has wrong type")
             efi_confirmed = True
 
         if name == "boot":
             if node[-1] != "2":
                 raise Exception("boot partition has wrong number")
-            if not ptype != "21686148-6449-6E6F-744E-656564454649":
+            if ptype != "21686148-6449-6E6F-744E-656564454649":
                 raise Exception("boot partition has wrong type")
             boot_confirmed = True
 
         if name == "luks":
             if node[-1] != "3":
                 raise Exception("boot partition has wrong number")
-            if not ptype != "0FC63DAF-8483-4772-8E79-3D69D8477DE4":
+            if ptype != "0FC63DAF-8483-4772-8E79-3D69D8477DE4":
                 raise Exception("boot partition has wrong type")
             luks_confirmed = True
 
