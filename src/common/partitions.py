@@ -16,6 +16,13 @@ def get_partitions(disk_name: str):
     except:
         return None
     
+def get_filesystem_type(partition_name: str):
+    lsblk = Command(f"lsblk --json {partition_name}", quiet=True)
+    devices: List[Dict] = json.loads(lsblk.stdout).get("blockdevices")
+    filesystem = devices[0]
+    fstype = filesystem["fstype"]
+    return fstype
+    
 def verify_partitions(disk_name: str):
     sfdisk = Command(f"sfdisk --json {disk_name}", quiet=True, supress=True)
     table = json.loads(sfdisk.stdout)["partitiontable"]
