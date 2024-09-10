@@ -6,9 +6,9 @@ def base_packages():
 def kernel_packages():
     output = [
         "linux",
-        "linux-headers",
-        "linux-lts",
-        "linux-lts-headers",
+        #"linux-headers",
+        #"linux-lts",
+        #"linux-lts-headers",
         "linux-firmware",
     ]
     return output
