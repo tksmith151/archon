@@ -22,7 +22,7 @@ def format(disk_name: str, system_password: str):
         '--key-size', '256',
         # Paramaters chosen base on:
         # https://www.rfc-editor.org/rfc/rfc9106.html#name-parameter-choice
-        '--pbkdf-force-iterations', '3',
+        '--pbkdf-force-iterations', '4',
         '--pbkdf-memory', '67108',
         '--pbkdf-parallel', '4',
         '--key-file', "/tmp/system_password",
