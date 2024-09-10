@@ -36,7 +36,7 @@ def update_mirrors():
     # reflector command
     # reflector --connection-timeout 1 --threads 2 --url https://archlinux.org/mirrors/status/tier/1/json/ --protocol https --sort rate --country US,CA --save /etc/pacman.d/mirrorlist
     base_path = pathlib.Path(__file__).parent.parent.parent.resolve()
-    mirror_list_file = base_path / "conf" / "packages"
+    mirror_list_file = base_path / "conf" / "mirrorlist"
     copy_file(mirror_list_file, "/etc/pacman.d/mirrorlist")
 
 def config_pacman():
