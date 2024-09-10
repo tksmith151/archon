@@ -8,10 +8,15 @@ class InputManager:
             install_disk = select_disk()
             write_file(disk_file, install_disk)
         install_disk = read_file(disk_file)
-        print(disk_file)
+        print(install_disk)
         return install_disk
     
     @functools.cached_property
     def system_password(self):
-        system_password = get_password("system")
+        password_file = "/tmp/system_password"
+        if not check_file(password_file):
+            system_password = get_password("system")
+            write_file(password_file, system_password)
+        system_password = read_file(password_file)
+        print(system_password)
         return system_password
