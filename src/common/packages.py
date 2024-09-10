@@ -33,41 +33,13 @@ def get_configured_packages():
     return output
 
 def update_mirrors():
-    Command("reflector --connection-timeout 1 --threads 2 --url https://archlinux.org/mirrors/status/tier/1/json/ --protocol https --sort rate --country US,CA --save /etc/pacman.d/mirrorlist")
+    # reflector command
+    # reflector --connection-timeout 1 --threads 2 --url https://archlinux.org/mirrors/status/tier/1/json/ --protocol https --sort rate --country US,CA --save /etc/pacman.d/mirrorlist
+    base_path = pathlib.Path(__file__).parent.parent.parent.resolve()
+    mirror_list_file = base_path / "conf" / "packages"
+    copy_file(mirror_list_file, "/etc/pacman.d/mirrorlist")
 
 def config_pacman():
-    lines = [
-        "# See the pacman.conf(5) manpage for option and repository directives \n",
-        "[options]",
-        "RootDir           = /",
-        "DBPath            = /var/lib/pacman/",
-        "LogFile           = /var/log/pacman.log",
-        "GPGDir            = /etc/pacman.d/gnupg/",
-        "HoldPkg           = pacman glibc",
-        "SyncFirst         = pacman",
-        "CleanMethod       = KeepInstalled",
-        "Architecture      = auto",
-        "ParallelDownloads = 6",
-        "SigLevel          = Required DatabaseOptional TrustedOnly",
-        "Color",
-        "CheckSpace",
-        "ILoveCandy",
-        "",
-        "[core]",
-        "SigLevel = PackageRequired",
-        "Include = /etc/pacman.d/mirrorlist",
-        "",
-        "[extra]",
-        "SigLevel = PackageRequired",
-        "Include = /etc/pacman.d/mirrorlist",
-        "",
-        "[community]",
-        "SigLevel = PackageRequired",
-        "Include = /etc/pacman.d/mirrorlist",
-        "",
-        "[multilib]",
-        "SigLevel = PackageRequired",
-        "Include = /etc/pacman.d/mirrorlist",
-        "",
-    ]
-    write_file("/etc/pacman.conf", "\n".join(lines))
+    base_path = pathlib.Path(__file__).parent.parent.parent.resolve()
+    pacman_conf = base_path / "conf" / "pacman.conf"
+    copy_file(pacman_conf, "/etc/pacman.conf")
