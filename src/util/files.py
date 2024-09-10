@@ -10,3 +10,6 @@ def write_file(location, data):
 def read_file(location):
     with open(location, "r") as fd:
         return fd.read()
+    
+def check_file(location):
+    return os.path.isfile(location)

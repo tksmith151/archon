@@ -3,7 +3,12 @@ from namespace.all import *
 class InputManager:
     @functools.cached_property
     def install_disk(self):
-        install_disk = select_disk()
+        disk_file = "/tmp/install_disk"
+        if not check_file(disk_file):
+            install_disk = select_disk()
+            write_file(disk_file, install_disk)
+        install_disk = read_file(disk_file)
+        print(disk_file)
         return install_disk
     
     @functools.cached_property

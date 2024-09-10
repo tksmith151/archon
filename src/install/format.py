@@ -11,6 +11,21 @@ def format(disk_name: str, system_password: str):
     if get_filesystem_type(boot_partition) is None:
         Command(f"mkfs.ext4 {boot_partition}")
     # Format luks partition
+    """
+    cryptsetup_args = shlex.join([
+			'cryptsetup',
+			'--batch-mode',
+			'--verbose',
+			'--type', 'luks2',
+			'--pbkdf', 'argon2id',
+			'--hash', hash_type,
+			'--key-size', str(key_size),
+			'--iter-time', str(iter_time),
+			'--key-file', str(key_file),
+			'--use-urandom',
+			'luksFormat', str(self.luks_dev_path),
+		])
+    """
     luks_partition = partitions['luks']
     if get_filesystem_type(luks_partition) is None:
         Command(f"cryptsetup --batch-mode --verify-passphrase luksFormat {luks_partition}", capture=False)
