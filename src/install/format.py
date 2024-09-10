@@ -23,7 +23,7 @@ def format(disk_name: str, system_password: str):
         # Paramaters chosen base on:
         # https://www.rfc-editor.org/rfc/rfc9106.html#name-parameter-choice
         '--pbkdf-force-iterations', '3',
-        '--pbkdf-memory', '67108'
+        '--pbkdf-memory', '67108',
         '--pbkdf-parallel', '4',
         '--key-file', "/tmp/system_password",
         '--use-urandom',
