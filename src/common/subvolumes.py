@@ -1,7 +1,7 @@
 from namespace.common import *
 
 def unmount_all():
-    Command("umount -A --recursive /mnt")
+    Command("umount -A --recursive /mnt", quiet=True, supress=True)
 
 def list_subvolumes(btrfs_partition):
     unmount_all()
