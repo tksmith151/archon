@@ -31,8 +31,8 @@ def confirm(really=False):
 def get_password(password_name: str):
     password = ""
     confirmation = "."
-    prompt = f" Select {password} password: "
-    confirm_prompt = f"Confirm {password} password: "
+    prompt = f" Select {password_name} password: "
+    confirm_prompt = f"Confirm {password_name} password: "
     while True:
         password = getpass.getpass(prompt)
         confirmation = getpass.getpass(confirm_prompt)
