@@ -38,7 +38,7 @@ def clean(disk_name: str):
 
 def main():
     disk = select_disk()
-    mount(disk)
+    clean(disk)
     
 
 
