@@ -2,13 +2,14 @@ from namespace.all import *
 
 from src.config import *
 
+install_choices = ['all', 'prepare', 'partition', 'format', 'clean', 'mount', 'bootstrap']
+
 def parse_args():
     root_parser = argparse.ArgumentParser(prog="calc")
     root_subparsers = root_parser.add_subparsers(
         title="commands", help="Arch Linux Operations"
     )
 
-    install_choices = ['all', 'prepare', 'partition', 'format', 'clean', 'mount', 'bootstrap']
     install_parser = root_subparsers.add_parser("install")
     install_parser.add_argument(
         dest="steps",
@@ -22,10 +23,6 @@ def parse_args():
 
     args = root_parser.parse_args()
 
-    if args.command == "install":
-        if "all" in args.steps:
-            args.steps = install_choices
-
     return args
 
 
@@ -37,7 +34,10 @@ def main():
     hardware = HardwareManager()
     if command == "install":
         steps = args.steps
-        disk = None
+        if "all" in steps:
+            _ = inputs.install_disk
+            _ = inputs.system_password
+            steps = install_choices
         if "prepare" in steps:
             prepare()
         if "partition" in steps:
