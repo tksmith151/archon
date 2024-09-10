@@ -1,19 +1,7 @@
 from namespace.common import *
 
 def unmount_all():
-    mount_paths = [
-        "/mnt/efi",
-        "/mnt/boot",
-        "/mnt/home",
-        "/mnt/var/log",
-        "/mnt/var/cache/pacman/pkg",
-        "/mnt/.snapshots",
-        "/mnt/my",
-        "/mnt"
-    ]
-    for mount_path in mount_paths:
-        if os.path.ismount(mount_path):
-            Command(f"umount {mount_path}")
+    Command("umount -A --recursive /mnt")
 
 def list_subvolumes(btrfs_partition):
     unmount_all()

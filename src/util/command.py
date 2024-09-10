@@ -1,10 +1,11 @@
 from namespace.base import *
 
 class Command:
-    def __init__(self, string: str = None, *, quiet=False, capture=True) -> None:
+    def __init__(self, string: str = None, *, quiet=False, capture=True, supress=False) -> None:
         self._string: str = string
         self._quiet: bool = quiet
         self._capture: bool = capture
+        self._supress: bool = supress
         self.code = None
         self.stdout = None
         self.stderr = None
@@ -40,17 +41,21 @@ class Command:
         self.stderr = "".join(all_err)
         if self.stderr != "":
             if self.code != 0:
-                print("ERROR!")
+                self._error("ERROR!")
             else:
-                print("Warning!")
-            print(self.stderr)
-            print()
+                self._error("Warning!")
+            self._error(self.stderr)
+            self._error()
         else:
             self._show("Success!\n")
         self._check_code()
 
     def _show(self, text="", end="\n"):
         if not self._quiet:
+            print(text, end=end, flush=True)
+
+    def _error(self, text="", end="\n"):
+        if not self._supress:
             print(text, end=end, flush=True)
 
     def _check_code(self):
