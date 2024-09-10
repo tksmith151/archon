@@ -45,4 +45,4 @@ def config_pacman():
     copy_file(pacman_conf, "/etc/pacman.conf")
 
 def update_arch_keyring():
-    Command("pacman -S --noconfirm archlinux-keyring")
+    Command("pacman -S --noconfirm archlinux-keyring", capture=False)
