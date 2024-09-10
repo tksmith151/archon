@@ -59,5 +59,5 @@ class Command:
             print(text, end=end, flush=True)
 
     def _check_code(self):
-        if self.code != 0:
+        if self.code != 0 and not self._supress:
             raise Exception(F"Failed!")
