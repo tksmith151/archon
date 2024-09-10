@@ -43,3 +43,6 @@ def config_pacman():
     base_path = pathlib.Path(__file__).parent.parent.parent.resolve()
     pacman_conf = base_path / "conf" / "pacman.conf"
     copy_file(pacman_conf, "/etc/pacman.conf")
+
+def update_arch_keyring():
+    Command("pacman -S --noconfirm archlinux-keyring")
