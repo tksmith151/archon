@@ -7,7 +7,7 @@ subvolume_mounts = {
     "@.snapshots": "/mnt/.snapshots",
 }
 
-def clean(disk_name: str):
+def clean(disk_name: str, system_password: str):
     print("This action wipe previous arch subvolumes")
     print("and result in the loss of any current arch install")
     confirmed = confirm(really=True)

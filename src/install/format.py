@@ -1,6 +1,6 @@
 from namespace.standard import *
 
-def format(disk_name: str):
+def format(disk_name: str, system_password: str):
     partitions = get_partitions(disk_name)
     # Format efi partition
     efi_partition = partitions['efi']

@@ -1,5 +1,7 @@
 from namespace.all import *
 
+from src.config import *
+
 def parse_args():
     root_parser = argparse.ArgumentParser(prog="calc")
     root_subparsers = root_parser.add_subparsers(
@@ -28,25 +30,24 @@ def parse_args():
 
 
 def main():
+    hardware = HardwareManager
     args = parse_args()
     command = args.command
+    inputs = InputManager()
+    hardware = HardwareManager()
     if command == "install":
         steps = args.steps
         disk = None
         if "prepare" in steps:
             prepare()
         if "partition" in steps:
-            disk = select_disk(disk)
-            partition(disk)
+            partition(inputs.install_disk)
         if "format" in steps:
-            disk = select_disk(disk)
-            format(disk)
+            format(inputs.install_disk, inputs.system_password)
         if "clean" in steps:
-            disk = select_disk(disk)
-            clean(disk)
+            clean(inputs.install_disk, inputs.system_password)
         if "mount" in steps:
-            disk = select_disk(disk)
-            mount(disk)
+            mount(inputs.install_disk, inputs.system_password)
         if "bootstrap" in steps:
             bootstrap()
 

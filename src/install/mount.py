@@ -7,7 +7,7 @@ subvolume_mounts = {
     "@.snapshots": "/mnt/.snapshots",
 }
 
-def mount(disk_name: str):
+def mount(disk_name: str, system_password: str):
     btrfs_partition = "/dev/mapper/btrfs"
     partitions = get_partitions(disk_name)
 
