@@ -2,9 +2,11 @@ from namespace.standard import *
 
 def bootstrap():
     # TODO: Check for mounts
+    config_pacman()
+    update_mirrors()
     update_pacman()
     update_arch_keyring()
-    Command(f"pacstrap -K /mnt {' '.join(bootstrap_packages())}", capture=False)
+    Command(f"pacstrap -K /mnt {' '.join(base_packages())}", capture=False)
     # Copy fstab
     copy_file("/tmp/fstab", "/mnt/etc/fstab")
     # Needed for wireless cards

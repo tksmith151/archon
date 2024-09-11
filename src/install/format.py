@@ -1,15 +1,12 @@
 from namespace.standard import *
 
 def format(disk_name: str, system_password: str):
+    verify_partitions(disk_name)
     partitions = get_partitions(disk_name)
     # Format efi partition
     efi_partition = partitions['efi']
     if get_filesystem_type(efi_partition) is None:
         Command(f"mkfs.fat -F 32 {efi_partition}")
-    # Format boot partition
-    boot_partition = partitions['boot']
-    if get_filesystem_type(boot_partition) is None:
-        Command(f"mkfs.ext4 {boot_partition}")
     # Format luks partition
     luks_partition = partitions['luks']
     cryptsetup_args = shlex.join([
@@ -32,13 +29,12 @@ def format(disk_name: str, system_password: str):
     if get_filesystem_type(luks_partition) is None:
         Command(cryptsetup_args, capture=False)
     
-    btrfs_partition = "/dev/mapper/btrfs"
-    if not os.path.exists(btrfs_partition):
+    if not os.path.exists(PATH.btrfs_partition):
         Command(f"cryptsetup open --type luks --key-file /tmp/system_password {luks_partition} btrfs")
 
     # Format btrfs mapping
-    if get_filesystem_type(btrfs_partition) is None:
-        Command(f"mkfs.btrfs -f {btrfs_partition}")
+    if get_filesystem_type(PATH.btrfs_partition) is None:
+        Command(f"mkfs.btrfs -f {PATH.btrfs_partition}")
 
     # TODO: Verify file system types
 

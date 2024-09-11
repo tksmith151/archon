@@ -8,16 +8,15 @@ subvolume_mounts = {
 }
 
 def clean(disk_name: str, system_password: str):
-    btrfs_partition = "/dev/mapper/btrfs"
     partitions = get_partitions(disk_name)
 
     # Unlock luks if necessary
-    if not os.path.exists(btrfs_partition):
+    if not os.path.exists(PATH.btrfs_partition):
         Command(f"cryptsetup open --type luks {partitions['luks']} btrfs")
     
-    current_subvolumes = list_subvolumes(btrfs_partition)
+    current_subvolumes = list_subvolumes(PATH.btrfs_partition)
     unmount_all()
-    Command(f"mount {btrfs_partition} /mnt")
+    Command(f"mount {PATH.btrfs_partition} /mnt")
     if "@my" not in current_subvolumes:
         Command("btrfs subvolume create /mnt/@my")
     for current_subvolume in current_subvolumes:

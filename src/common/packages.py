@@ -10,15 +10,11 @@ def base_packages():
         # "iwd",
     ]
 
-def bootstrap_packages():
-    output = base_packages()
-    return output
-
 def get_configured_packages():
     packages_file = PATH.archon_dir / "conf" / "packages"
     text = read_file(str(packages_file))
     lines = text.split("\n")
-    packages = bootstrap_packages()
+    packages = base_packages()
     for line in lines:
         if line[0] == '#':
             continue

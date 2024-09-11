@@ -28,7 +28,6 @@ def verify_partitions(disk_name: str):
     table = json.loads(sfdisk.stdout)["partitiontable"]
     partition_data: List[Dict] = table["partitions"]
     efi_confirmed = False
-    boot_confirmed = False
     luks_confirmed = False
     for partition in partition_data:
         name = partition.get("name", None)
@@ -43,24 +42,15 @@ def verify_partitions(disk_name: str):
                 raise Exception("efi partition has wrong type")
             efi_confirmed = True
 
-        if name == "boot":
-            if node[-1] != "2":
-                raise Exception("boot partition has wrong number")
-            if ptype != "21686148-6449-6E6F-744E-656564454649":
-                raise Exception("boot partition has wrong type")
-            boot_confirmed = True
-
         if name == "luks":
-            if node[-1] != "3":
-                raise Exception("boot partition has wrong number")
+            if node[-1] != "2":
+                raise Exception("luks partition has wrong number")
             if ptype != "0FC63DAF-8483-4772-8E79-3D69D8477DE4":
-                raise Exception("boot partition has wrong type")
+                raise Exception("luks partition has wrong type")
             luks_confirmed = True
 
     if not efi_confirmed:
         raise Exception("efi partition is missing")
-    if not boot_confirmed:
-        raise Exception("boot partition is missing")
     if not luks_confirmed:
         raise Exception("luks partition is missing")
 

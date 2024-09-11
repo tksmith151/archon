@@ -2,7 +2,7 @@ from namespace.all import *
 
 from src.config import *
 
-install_choices = ['all', 'prepare', 'partition', 'format', 'clean', 'mount', 'bootstrap']
+install_choices = ['all', 'partition', 'format', 'clean', 'mount', 'bootstrap']
 
 def parse_args():
     root_parser = argparse.ArgumentParser(prog="calc")
@@ -27,7 +27,6 @@ def parse_args():
 
 
 def main():
-    hardware = HardwareManager
     args = parse_args()
     command = args.command
     inputs = InputManager()
@@ -39,8 +38,6 @@ def main():
             _ = inputs.system_password
             _ = inputs.confirm_wipe
             steps = install_choices
-        if "prepare" in steps:
-            prepare()
         if "partition" in steps:
             partition(inputs.install_disk)
         if "format" in steps:
