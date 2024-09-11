@@ -13,7 +13,7 @@ def parse_args():
     install_parser = root_subparsers.add_parser("install")
     install_parser.add_argument(
         dest="steps",
-        default=["all"],
+        default="all",
         type=str,
         choices=install_choices,
         metavar="STEPS",
