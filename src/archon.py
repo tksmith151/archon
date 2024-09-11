@@ -5,7 +5,7 @@ from src.config import *
 install_choices = ['all', 'partition', 'format', 'clean', 'mount', 'bootstrap']
 
 def parse_args():
-    root_parser = argparse.ArgumentParser(prog="calc")
+    root_parser = argparse.ArgumentParser(prog="archon")
     root_subparsers = root_parser.add_subparsers(
         title="commands", help="Arch Linux Operations"
     )
@@ -17,7 +17,7 @@ def parse_args():
         type=str,
         choices=install_choices,
         metavar="STEPS",
-        nargs="+",
+        nargs="*",
         help="names of steps to run in the install",
     )
     install_parser.set_defaults(command="install")
