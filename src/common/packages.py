@@ -15,8 +15,7 @@ def bootstrap_packages():
     return output
 
 def get_configured_packages():
-    base_path = pathlib.Path(__file__).parent.parent.parent.resolve()
-    packages_file = base_path / "conf" / "packages"
+    packages_file = PATH.archon_dir / "conf" / "packages"
     text = read_file(str(packages_file))
     lines = text.split("\n")
     packages = bootstrap_packages()
@@ -31,12 +30,12 @@ def get_configured_packages():
 def update_mirrors():
     # reflector command
     # reflector --connection-timeout 1 --threads 2 --url https://archlinux.org/mirrors/status/tier/1/json/ --protocol https --sort rate --country US,CA --save /etc/pacman.d/mirrorlist
-    base_path = pathlib.Path(__file__).parent.parent.parent.resolve()
+    base_path = PATH.archon_dir
     mirror_list_file = base_path / "conf" / "mirrorlist"
     copy_file(mirror_list_file, "/etc/pacman.d/mirrorlist")
 
 def config_pacman():
-    base_path = pathlib.Path(__file__).parent.parent.parent.resolve()
+    base_path = PATH.archon_dir
     pacman_conf = base_path / "conf" / "pacman.conf"
     copy_file(pacman_conf, "/etc/pacman.conf")
 
