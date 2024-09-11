@@ -3,23 +3,14 @@ from namespace.common import *
 def base_packages():
     return [
         "base",
-        "linux",
-        "linux-firmware",
+        # "linux",
+        # "linux-firmware",
+        # Wireless service
+        # "iwd",
     ]
-
-def kernel_packages():
-    output = [
-        "linux",
-        #"linux-headers",
-        #"linux-lts",
-        #"linux-lts-headers",
-        "linux-firmware",
-    ]
-    return output
 
 def bootstrap_packages():
     output = base_packages()
-    output.extend(kernel_packages())
     return output
 
 def get_configured_packages():
