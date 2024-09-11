@@ -26,9 +26,12 @@ def clean(disk_name: str, system_password: str):
     Command(f"mount {btrfs_partition} /mnt")
     if "@my" not in current_subvolumes:
         Command("btrfs subvolume create /mnt/@my")
-    for needed_subvolume in subvolume_mounts.keys():
-        if needed_subvolume in current_subvolumes:
-            Command(f"btrfs subvolume delete /mnt/{needed_subvolume}")
+    for current_subvolume in current_subvolumes:
+        if current_subvolume == "@my":
+            continue
+        if current_subvolume == "@":
+            continue
+        Command(f"btrfs subvolume delete /mnt/{current_subvolume}")
     if "@" in current_subvolumes:
         Command(f"btrfs subvolume delete /mnt/@")
     Command(f"btrfs subvolume create /mnt/@")
