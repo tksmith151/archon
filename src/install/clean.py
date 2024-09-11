@@ -8,12 +8,6 @@ subvolume_mounts = {
 }
 
 def clean(disk_name: str, system_password: str):
-    print("This action wipe previous arch subvolumes")
-    print("and result in the loss of any current arch install")
-    confirmed = confirm(really=True)
-    if not confirmed:
-        return
-    
     btrfs_partition = "/dev/mapper/btrfs"
     partitions = get_partitions(disk_name)
 

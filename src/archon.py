@@ -37,6 +37,7 @@ def main():
         if "all" in steps:
             _ = inputs.install_disk
             _ = inputs.system_password
+            _ = inputs.confirm_wipe
             steps = install_choices
         if "prepare" in steps:
             prepare()
@@ -45,6 +46,7 @@ def main():
         if "format" in steps:
             format(inputs.install_disk, inputs.system_password)
         if "clean" in steps:
+            _ = inputs.confirm_wipe
             clean(inputs.install_disk, inputs.system_password)
         if "mount" in steps:
             mount(inputs.install_disk, inputs.system_password)

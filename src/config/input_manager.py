@@ -18,3 +18,12 @@ class InputManager:
             write_file(password_file, system_password)
         system_password = read_file(password_file)
         return system_password
+    
+    @functools.cached_property
+    def confirm_wipe(self):
+        print("This action wipe previous arch subvolumes")
+        print("and result in the loss of any current arch install")
+        confirmed = confirm(really=True)
+        if not confirmed:
+            raise Exception("Did not confirm")
+        return confirmed
