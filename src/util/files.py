@@ -13,3 +13,6 @@ def read_file(location):
     
 def check_file(location):
     return os.path.isfile(location)
+
+def make_dir(location):
+    os.makedirs(location, exist_ok=True)
