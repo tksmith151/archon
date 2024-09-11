@@ -9,6 +9,11 @@ def bootstrap():
     make_dir("/mnt/usr/lib/firmware/")
     copy_file("/usr/lib/firmware/regulatory.db", "/mnt/usr/lib/firmware/regulatory.db")
     copy_file("/usr/lib/firmware/regulatory.db.p7s", "/mnt/usr/lib/firmware/regulatory.db.p7s")
+    # Copy archon to my directory
+    base_path = pathlib.Path(__file__).parent.parent.parent.resolve()
+    Command(f"cp -R {base_path} /mnt/my/archon")
+
+
 
 
 def main():
