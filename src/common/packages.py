@@ -3,6 +3,7 @@ from namespace.common import *
 def base_packages():
     return [
         "base",
+        "python",
         # "linux",
         # "linux-firmware",
         # Wireless service
