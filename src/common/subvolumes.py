@@ -14,7 +14,7 @@ def list_subvolumes(btrfs_partition):
     lines = output.split("\n")
     for line in lines:
         fields = line.split(" ")
-        path = fields[-1].replace("<FSTREE>/","")
+        path = fields[-1].replace("<FS_TREE>/","")
         if path:
             paths.add(path)
 
