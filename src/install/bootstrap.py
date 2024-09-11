@@ -2,6 +2,8 @@ from namespace.standard import *
 
 def bootstrap():
     # TODO: Check for mounts
+    update_pacman()
+    update_arch_keyring()
     Command(f"pacstrap -K /mnt {' '.join(bootstrap_packages())}", capture=False)
     # Copy fstab
     copy_file("/tmp/fstab", "/mnt/etc/fstab")
