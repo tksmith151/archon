@@ -1,6 +1,5 @@
 # Use cloudflare mirror
 Server = https://cloudflaremirrors.com/archlinux/$repo/os/$arch
 # Backup tier 1 mirrors
-Server = https://mirrors.ocf.berkeley.edu/archlinux/$repo/os/$arch
 Server = https://mirror.sfo12.us.leaseweb.net/archlinux/$repo/os/$arch
 Server = https://mirror.mia11.us.leaseweb.net/archlinux/$repo/os/$arch
